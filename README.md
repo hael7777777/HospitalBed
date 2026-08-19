@@ -20,3 +20,11 @@ This problem requires a more **sophisticated** system therefore a digital approa
 ---
 
 ## Code Structure
+
+## References
+### Medical Conditions
+- 🧠 *[Mental](https://www.nami.org/types-of-conditions/)*
+- 👤 *[Physical](https://www.nhsinform.scot/illnesses-and-conditions/a-to-z)*
+
+### Code
+- 🧩 *[Regex](https://www.w3schools.com/java/java_regex.asp)*
