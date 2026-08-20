@@ -1,7 +1,9 @@
 package com.mycompany.hospitalbed;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Patient {
 
@@ -15,12 +17,13 @@ public class Patient {
     - greater efficiency of storage usage
     - improved organisation
      */
-    //instantiating my variables which are to assigned to the patient object (protected so that the child class can still access)
+    //instantiating my variables (and objects) which are to assigned to the patient object (protected so that the child class can still access)
     protected int PatientID, Age;
     protected String FirstName, LastName, MedicalCondition;
     PatientCategory Category;
     Gender Gender;
     Scanner input = new Scanner(System.in);
+    ArrayList<Patient> PatientList = new ArrayList<>();
 
     //costructor for the patient wherein the details of the patient are assigned to an object
     public Patient(int PatientID, int Age, String FirstName, String LastName, Gender Gender, String MedicalCondition, PatientCategory Category) {
@@ -40,42 +43,43 @@ public class Patient {
                 + " (" + Gender + ")" + " is " + Age + " year/s of age and has " + MedicalCondition);
     }
 
-    //adding a patient (creating a new patient object)
-    public void register() {
-        //exception handeling for user misinputs (safe exit)
-        try {
+    //adding a patient (creating a new patient object) (method returns an object therefore not void, instead, Patient is the object returned)
+    public Patient register() {
 
-            //initial prompt
-            System.out.print("To register a patient, please follow the proceeding questions:\n");
+        //initial prompt
+        System.out.print("To register a patient, please follow the proceeding questions:\n");
 
-            //error handling for incorrect inputs
-            boolean flag1 = true;
-            while (flag1) {
+        //error handling for incorrect inputs
+        boolean flag1 = true;
+        while (flag1) {
 
-                //input of patient first name
-                System.out.println("- First name: ");
-                FirstName = input.nextLine();
-                if (FirstName.matches("^[a-zA-Z]+$")) {
-                    flag1 = false;
-                } else {
-                    System.out.println("Error: Do not use numbers or leave empty");
-                    flag1 = true;
-                }
+            //input of patient first name
+            System.out.println("- First name: ");
+            FirstName = input.nextLine();
+            if (FirstName.matches("^[a-zA-Z]+$")) {
+                flag1 = false;
+            } else {
+                System.out.println("Error: Do not use numbers or leave empty");
+                flag1 = true;
             }
+        }
 
-            boolean flag2 = true;
-            while (flag2) {
+        boolean flag2 = true;
+        while (flag2) {
 
-                //input of patient last name
-                System.out.println("- Last name: ");
-                LastName = input.nextLine();
-                if (FirstName.matches("^[a-zA-Z]+$")) {
-                    flag2 = false;
-                } else {
-                    System.out.println("Error: Do not use numbers or leave empty");
-                    flag2 = true;
-                }
+            //input of patient last name
+            System.out.println("- Last name: ");
+            LastName = input.nextLine();
+            if (FirstName.matches("^[a-zA-Z]+$")) {
+                flag2 = false;
+            } else {
+                System.out.println("Error: Do not use numbers or leave empty");
+                flag2 = true;
             }
+        }
+
+        boolean flag3 = true;
+        while (flag3) {
 
             //input of patient gender
             System.out.print("- Gender, M / F: ");
@@ -83,54 +87,44 @@ public class Patient {
             String answer = input.nextLine().trim().toUpperCase();
             if (answer.equals("M") || answer.equals("MALE")) {
                 Gender = Gender.Male;
+                flag3 = false;
             } else if (answer.equals("F") || answer.equals("FEMALE")) {
                 Gender = Gender.Female;
+                flag3 = false;
+            } else {
+                System.out.println("Error: Please enter if patient is male or female");
             }
-
-            //input of patient age:
-            System.out.print("- Age: ");
-            Age = input.nextInt();
-
-            //consuming the \n
-            input.nextLine();
-
-            //input of patient medical condition
-            System.out.print("- Medical condition: ");
-            MedicalCondition = input.nextLine();
-
-            /*
-        - input of patient category
-        - simple while loop for if defualt is activated to repromt
-        - the sentinal value means that the prompt runs while the condition is met, defualt doesnt change the condition so it runs again.
-             */
-            boolean sentinal = true;
-            while (sentinal) {
-                System.out.println("- Category: \n\t1. Inpatient\n\t2. Outpatient\n\t3. Emergency");
-                int x = input.nextInt();
-                switch (x) {
-                    case 1:
-                        Category = PatientCategory.Inpatient;
-                        sentinal = false;
-                        break;
-
-                    case 2:
-                        Category = PatientCategory.Outpatient;
-                        sentinal = false;
-                        break;
-
-                    case 3:
-                        Category = PatientCategory.Emergency;
-                        sentinal = false;
-                        break;
-
-                    default:
-                        System.out.println("Error: Please answer with either 1, 2 or 3.");
-
-                }
-            }
-            Patient registeredPatient = new Patient(PatientID, Age, FirstName, LastName, Gender, MedicalCondition, Category);
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Please enter the correct details");
         }
+
+        boolean flag4 = true;
+        while (flag4) {
+            //exception handeling for user misinputs (safe exit)
+            try {
+                //input of patient age:
+                System.out.print("- Age: ");
+                Age = input.nextInt();
+                if (Age >= 0) {
+                    flag4 = false;
+                } else {
+                    System.out.println("Error: Age cannot be negative");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Please enter an integer");
+                //consuming the wrong input
+                input.nextLine();
+            }
+        }
+        //consuming the \n
+        input.nextLine();
+        //input of patient medical condition
+        System.out.print("- Medical condition: ");
+        MedicalCondition = input.nextLine();
+        
+        //generating patient ID (4 digits)
+        this.PatientID = ThreadLocalRandom.current().nextInt(1000,9999);     
+        Patient nonInpatient = new Patient(PatientID, Age, FirstName, LastName, Gender, MedicalCondition, Category);
+        //adding to the list of patients
+        PatientList.add(nonInpatient);
+        return nonInpatient;
     }
 }

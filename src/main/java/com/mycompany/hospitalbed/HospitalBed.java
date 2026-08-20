@@ -16,10 +16,5 @@ public class HospitalBed {
      */
     public static void main(String[] args) {
         
-        //for trouble shooting mid development
-        PatientCategory Category = null;
-        Gender Gender = null;
-        Patient pa = new Patient(0,0,"","",Gender ,"", Category);
-        pa.register();
     }
 }
