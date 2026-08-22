@@ -1,5 +1,6 @@
 package com.mycompany.hospitalbed;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -21,6 +22,7 @@ public class Patient {
     protected String FirstName, LastName, MedicalCondition;
     protected PatientCategory Category;
     protected Gender theGender;
+    static ArrayList<Patient> listOfPatients = new ArrayList<>();
 
     //costructor for the patient wherein the details of the patient are assigned to an object
     protected Patient(int PatientID, int Age, String FirstName, String LastName, Gender Gender, String MedicalCondition, PatientCategory Category) {
@@ -91,8 +93,7 @@ public class Patient {
     }
 
     ///////////////////////////////////////////////////Registering///////////////////////////////////////////////////
-
-    static Patient regi(Scanner input) {
+    static Patient details(Scanner input) {
         int patientID, age;
         String firstName, lastName, medicalCondition;
         PatientCategory category;
@@ -101,55 +102,82 @@ public class Patient {
         System.out.println("Fill out the following questions about the patient: ");
 
         System.out.print("First Name: ");
+        //consuming /n (for some reason it only works when i do it this way around)
+        input.nextLine();
         firstName = input.nextLine();
 
-        System.out.println("Last name: ");
+        System.out.print("Last name: ");
         lastName = input.nextLine();
 
-        age = 0; /////////////
+        age = 0;
+        /////////////
         try {
-            System.out.println("Age: ");
+            System.out.print("Age: ");
             age = input.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Error: Enter an integer please");
         }
 
-        System.out.println("Gender - M/F: ");
-        String answer = input.nextLine();
+        //consuming /n
+        input.nextLine();
+        
+        System.out.print("Gender - M/F: ");
+        String answer = input.nextLine().trim();
         //initializing gender
         gender = null;
-        if (answer.toUpperCase().equals("M")) {
+        if (answer.equalsIgnoreCase("M")) {
             gender = Gender.Male;
-        } else if (answer.toUpperCase().equals("F")) {
+        } else if (answer.equalsIgnoreCase("F")) {
             gender = Gender.Female;
         }
 
-        System.out.println("Condition: ");
+        System.out.print("Condition: ");
         medicalCondition = input.nextLine();
-        
+
         System.out.println("Category confirmation: \n\t1. Outpatient\n\t2. Emergency");
         int y = input.nextInt();
+        //consuming \n
+        input.nextLine();
         //initialized
         category = null;
         switch (y) {
-            case 1 : 
+            case 1:
                 category = PatientCategory.Outpatient;
-                    break;
-            case 2 : 
+                break;
+            case 2:
                 category = PatientCategory.Emergency;
-                    break;
-            default : System.out.println("Error: Enter a number 1 through 3");
+                break;
+            default:
+                System.out.println("Error: Enter a number 1 through 3");
         }
-        
-        //generating a patientID
-        patientID = ThreadLocalRandom.current().nextInt(1000,9999);
 
-        Patient p = new Patient(patientID, age, firstName, lastName, gender, medicalCondition, category);
-        return p;
+        //generating a patientID
+        patientID = ThreadLocalRandom.current().nextInt(1000, 9999);
+
+        Patient patient_object = new Patient(patientID, age, firstName, lastName, gender, medicalCondition, category);
+        listOfPatients.add(patient_object);
+        
+        //viewing patient details
+        System.out.println("Do you want to view patient details? y/n");
+        String view = input.nextLine().trim();
+        if (view.equalsIgnoreCase("Y")) {
+            patient_object.displayDetails();
+        } else if (view.equalsIgnoreCase("N")) {
+            System.out.println("Ok, not displaying details.\n");
+        }
+
+        Register.reprompt(input);
+
+        return patient_object;
+    }
+
+    /////////////////////////////////display////////////////////////////////////
+    public void displayDetails() {
+        System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
+                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + "." );
     }
     
-    public void displayDetails(){
-        System.out.println();
-    }
-    
+//    public void update(){
+//        
+//    }
 }

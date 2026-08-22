@@ -5,21 +5,29 @@ import java.util.Scanner;
 public class Register {
 
     public static void register(Scanner input) {
-        System.out.println("Please select the category of your patient:\n\t1. Inpatient\n\t2. Outpatient\n\t3. Emergency");
+        System.out.println("Is your patient an inpatient? (enter '1' or '2') \n\t1. Yes\n\t2. No");
         int x = input.nextInt();
         PatientCategory cat = null;
         switch (x) {
             case 1:
-                System.out.println("Registering an inpatient");
-                Inpatient.regi(input);
+                Inpatient.details(input);
+                break;
             case 2:
-                System.out.println("Registering an outpatient");
-                Patient.regi(input);
-            case 3:
-                System.out.println("Registering an emergency");
-                Patient.regi(input);
+                Patient.details(input);
+                break;
             default:
                 System.out.println("Error: Enter a number 1 through 3");
+        }
+    }
+
+    public static void reprompt(Scanner input) {
+        System.out.println("Do you want to register another patient? y/n");
+        String answer = input.nextLine().trim();
+
+        if (answer.equalsIgnoreCase("Y")) {
+            register(input);
+        } else if (answer.equalsIgnoreCase("N")) {
+            System.out.println("Ok, not registering another patient.\n");
         }
     }
 
