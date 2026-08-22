@@ -1,6 +1,5 @@
 package com.mycompany.hospitalbed;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -20,111 +19,137 @@ public class Patient {
     //instantiating my variables (and objects) which are to assigned to the patient object (protected so that the child class can still access)
     protected int PatientID, Age;
     protected String FirstName, LastName, MedicalCondition;
-    PatientCategory Category;
-    Gender Gender;
-    Scanner input = new Scanner(System.in);
-    ArrayList<Patient> PatientList = new ArrayList<>();
+    protected PatientCategory Category;
+    protected Gender theGender;
 
     //costructor for the patient wherein the details of the patient are assigned to an object
-    public Patient(int PatientID, int Age, String FirstName, String LastName, Gender Gender, String MedicalCondition, PatientCategory Category) {
+    protected Patient(int PatientID, int Age, String FirstName, String LastName, Gender Gender, String MedicalCondition, PatientCategory Category) {
         this.PatientID = PatientID;
         this.Age = Age;
         this.FirstName = FirstName;
         this.LastName = LastName;
-        this.Gender = Gender;
+        this.theGender = Gender;
         this.MedicalCondition = MedicalCondition;
         this.Category = Category;
     }
 
-    //display method to give information about patient
-    public void displayDetails() {
-        System.out.println("Patient identification number: " + PatientID + "(" + Category + ")" + "\n////////////////////////////////////////////"
-                + "\nPatient " + FirstName + ", " + LastName
-                + " (" + Gender + ")" + " is " + Age + " year/s of age and has " + MedicalCondition);
+    //getters and setters for retrieving the "data"
+    public int getPatientID() {
+        return PatientID;
     }
 
-    //adding a patient (creating a new patient object) (method returns an object therefore not void, instead, Patient is the object returned)
-    public Patient register() {
+    public void setPatientID(int PatientID) {
+        this.PatientID = PatientID;
+    }
 
-        //initial prompt
-        System.out.print("To register a patient, please follow the proceeding questions:\n");
+    public int getAge() {
+        return Age;
+    }
 
-        //error handling for incorrect inputs
-        boolean flag1 = true;
-        while (flag1) {
+    public void setAge(int Age) {
+        this.Age = Age;
+    }
 
-            //input of patient first name
-            System.out.println("- First name: ");
-            FirstName = input.nextLine();
-            if (FirstName.matches("^[a-zA-Z]+$")) {
-                flag1 = false;
-            } else {
-                System.out.println("Error: Do not use numbers or leave empty");
-                flag1 = true;
-            }
+    public String getFirstName() {
+        return FirstName;
+    }
+
+    public void setFirstName(String FirstName) {
+        this.FirstName = FirstName;
+    }
+
+    public String getLastName() {
+        return LastName;
+    }
+
+    public void setLastName(String LastName) {
+        this.LastName = LastName;
+    }
+
+    public String getMedicalCondition() {
+        return MedicalCondition;
+    }
+
+    public void setMedicalCondition(String MedicalCondition) {
+        this.MedicalCondition = MedicalCondition;
+    }
+
+    public PatientCategory getCategory() {
+        return Category;
+    }
+
+    public void setCategory(PatientCategory Category) {
+        this.Category = Category;
+    }
+
+    public Gender getGender() {
+        return theGender;
+    }
+
+    public void setGender(Gender gender) {
+        this.theGender = gender;
+    }
+
+    ///////////////////////////////////////////////////Registering///////////////////////////////////////////////////
+
+    static Patient regi(Scanner input) {
+        int patientID, age;
+        String firstName, lastName, medicalCondition;
+        PatientCategory category;
+        Gender gender;
+
+        System.out.println("Fill out the following questions about the patient: ");
+
+        System.out.print("First Name: ");
+        firstName = input.nextLine();
+
+        System.out.println("Last name: ");
+        lastName = input.nextLine();
+
+        age = 0; /////////////
+        try {
+            System.out.println("Age: ");
+            age = input.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Enter an integer please");
         }
 
-        boolean flag2 = true;
-        while (flag2) {
-
-            //input of patient last name
-            System.out.println("- Last name: ");
-            LastName = input.nextLine();
-            if (FirstName.matches("^[a-zA-Z]+$")) {
-                flag2 = false;
-            } else {
-                System.out.println("Error: Do not use numbers or leave empty");
-                flag2 = true;
-            }
+        System.out.println("Gender - M/F: ");
+        String answer = input.nextLine();
+        //initializing gender
+        gender = null;
+        if (answer.toUpperCase().equals("M")) {
+            gender = Gender.Male;
+        } else if (answer.toUpperCase().equals("F")) {
+            gender = Gender.Female;
         }
 
-        boolean flag3 = true;
-        while (flag3) {
-
-            //input of patient gender
-            System.out.print("- Gender, M / F: ");
-            //trim method to remove white space, upper case method to standardize.
-            String answer = input.nextLine().trim().toUpperCase();
-            if (answer.equals("M") || answer.equals("MALE")) {
-                Gender = Gender.Male;
-                flag3 = false;
-            } else if (answer.equals("F") || answer.equals("FEMALE")) {
-                Gender = Gender.Female;
-                flag3 = false;
-            } else {
-                System.out.println("Error: Please enter if patient is male or female");
-            }
-        }
-
-        boolean flag4 = true;
-        while (flag4) {
-            //exception handeling for user misinputs (safe exit)
-            try {
-                //input of patient age:
-                System.out.print("- Age: ");
-                Age = input.nextInt();
-                if (Age >= 0) {
-                    flag4 = false;
-                } else {
-                    System.out.println("Error: Age cannot be negative");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Error: Please enter an integer");
-                //consuming the wrong input
-                input.nextLine();
-            }
-        }
-        //consuming the \n
-        input.nextLine();
-        //input of patient medical condition
-        System.out.print("- Medical condition: ");
-        MedicalCondition = input.nextLine();
+        System.out.println("Condition: ");
+        medicalCondition = input.nextLine();
         
-        //generating patient ID (4 digits)
-        this.PatientID = ThreadLocalRandom.current().nextInt(1000,9999);     
-        Patient nonInpatient = new Patient(PatientID, Age, FirstName, LastName, Gender, MedicalCondition, Category);
-        //adding to the list of patients
-        PatientList.add(nonInpatient);
-        return nonInpatient;
+        System.out.println("Category confirmation: \n\t1. Outpatient\n\t2. Emergency");
+        int y = input.nextInt();
+        //initialized
+        category = null;
+        switch (y) {
+            case 1 : 
+                category = PatientCategory.Outpatient;
+                    break;
+            case 2 : 
+                category = PatientCategory.Emergency;
+                    break;
+            default : System.out.println("Error: Enter a number 1 through 3");
+        }
+        
+        //generating a patientID
+        patientID = ThreadLocalRandom.current().nextInt(1000,9999);
+
+        Patient p = new Patient(patientID, age, firstName, lastName, gender, medicalCondition, category);
+        return p;
     }
+    
+    public void displayDetails(){
+        System.out.println();
+    }
+    
 }

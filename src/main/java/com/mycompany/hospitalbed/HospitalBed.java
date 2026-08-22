@@ -1,5 +1,7 @@
 package com.mycompany.hospitalbed;
 
+import java.util.Scanner;
+
 public class HospitalBed {
 
     /*
@@ -13,8 +15,11 @@ public class HospitalBed {
     - Allocate and release hospital beds
     - Enable viewing of patient and bed information
     - Generate basic ward reports
+    
+    For the sake of the scenario, the "hospital ward" which "contains 20 beds" as mentioned in Feature 2
+    will be ward 3. ^ therefore the "WardNumber" will be fixed at 3.
      */
     public static void main(String[] args) {
-        
+        Scanner input = new Scanner(System.in);
     }
 }
