@@ -4,23 +4,41 @@ import java.util.Scanner;
 
 public class Beds {
 
-    public static void beds() {
-        Inpatient bed[][] = new Inpatient[4][5];
+    public static Inpatient[][] bed = new Inpatient[4][5];
+
+    public static void beds(Scanner input) {
+        displayBeds(bed);
     }
 
-    public static void initializeBeds(Inpatient bed[][], Scanner input) {
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 5; y++) {
-                bed[x][y] = Inpatient.details(input);
+    //populating the array
+    public static boolean assignBeds(Inpatient p) {
+        for (int x = 0; x < bed.length; x++) {
+            for (int y = 0; y < bed[x].length; y++) {
+                if (bed[x][y] == null) {
+                    bed[x][y] = p;
+
+                    int bedNum = (x * bed[0].length) + y + 1;
+                    p.setBedNumber(bedNum);
+                    return true;
+                }
             }
         }
+        System.out.println("Error: All beds are full in the ward!");
+        return false;
     }
 
-    public static void displayBeds(Inpatient bed[][], Scanner input) {
-        for (int x = 0; x < 4; x++) {
-            for (int y = 0; y < 5; y++) {
-                System.out.printf("%-4d", bed[x][y]);
+    //printing out the array
+    public static void displayBeds(Inpatient bed[][]) {
+        for (int x = 0; x < bed.length; x++) {
+            for (int y = 0; y < bed[x].length; y++) {
+                if (bed[x][y] != null) {
+                    System.out.printf("[%-5s]", bed[x][y].getPatientID());
+                } else {
+                    System.out.printf("[%-5s]", "Empty");
+                }
             }
+            //printing a \n after each row
+            System.out.println();
         }
     }
 }

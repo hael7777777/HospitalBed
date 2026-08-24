@@ -33,76 +33,6 @@ public class Inpatient extends Patient {
         this.BedNumber = BedNumber;
     }
 
-    @Override
-    public int getPatientID() {
-        return PatientID;
-    }
-
-    @Override
-    public void setPatientID(int PatientID) {
-        this.PatientID = PatientID;
-    }
-
-    @Override
-    public int getAge() {
-        return Age;
-    }
-
-    @Override
-    public void setAge(int Age) {
-        this.Age = Age;
-    }
-
-    @Override
-    public String getFirstName() {
-        return FirstName;
-    }
-
-    @Override
-    public void setFirstName(String FirstName) {
-        this.FirstName = FirstName;
-    }
-
-    @Override
-    public String getLastName() {
-        return LastName;
-    }
-
-    @Override
-    public void setLastName(String LastName) {
-        this.LastName = LastName;
-    }
-
-    @Override
-    public String getMedicalCondition() {
-        return MedicalCondition;
-    }
-
-    @Override
-    public void setMedicalCondition(String MedicalCondition) {
-        this.MedicalCondition = MedicalCondition;
-    }
-
-    @Override
-    public PatientCategory getCategory() {
-        return Category;
-    }
-
-    @Override
-    public void setCategory(PatientCategory Category) {
-        this.Category = Category;
-    }
-
-    @Override
-    public Gender getGender() {
-        return theGender;
-    }
-
-    @Override
-    public void setGender(Gender gender) {
-        this.theGender = gender;
-    }
-
     ///////////////////////////////////////////////////Registering///////////////////////////////////////////////////
     static Inpatient details(Scanner input) {
         int patientID, age, wardNumber, bedNumber;
@@ -147,16 +77,21 @@ public class Inpatient extends Patient {
         category = PatientCategory.Inpatient;
 
         //generating a patientID
-        patientID = ThreadLocalRandom.current().nextInt(1000, 9999);
+        patientID = ThreadLocalRandom.current().nextInt(10000, 99999);
 
         //as due to the scenario
         System.out.println("Your inpatient will be in ward 3");
         wardNumber = 3;
 
-        bedNumber = 4;
-
-        Inpatient inpatient_object = new Inpatient(patientID, age, firstName, lastName, gender, medicalCondition, category, wardNumber, bedNumber);
-        listOfInpatients.add(inpatient_object);
+        Inpatient inpatient_object = new Inpatient(patientID, age, firstName, lastName, gender, medicalCondition, category, wardNumber, 0);
+        
+        //assigning to the first open bed
+        boolean assigned = Beds.assignBeds(inpatient_object);
+        
+        //whether to add or not
+        if (assigned){
+            listOfInpatients.add(inpatient_object);
+        }
         
         //viewing inpatient details
         System.out.println("Do you want to view patient details? y/n");
@@ -166,7 +101,6 @@ public class Inpatient extends Patient {
         } else if (view.equalsIgnoreCase("N")) {
             System.out.println("Ok, not displaying details.\n");
         }
-        Register.reprompt(input);
         
         return inpatient_object;
     }

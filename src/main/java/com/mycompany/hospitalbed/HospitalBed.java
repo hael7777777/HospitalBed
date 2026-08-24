@@ -22,5 +22,8 @@ public class HospitalBed {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Register.register(input);
+        
+        System.out.println("\n--- ward 3 ---");
+        Beds.beds(input);
     }
 }

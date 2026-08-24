@@ -7,7 +7,7 @@ public class Register {
     public static void register(Scanner input) {
         System.out.println("Is your patient an inpatient? (enter '1' or '2') \n\t1. Yes\n\t2. No");
         int x = input.nextInt();
-        PatientCategory cat = null;
+        //consuming /n
         switch (x) {
             case 1:
                 Inpatient.details(input);
@@ -17,6 +17,7 @@ public class Register {
                 break;
             default:
                 System.out.println("Error: Enter a number 1 through 3");
+                return;
         }
     }
 

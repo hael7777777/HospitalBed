@@ -152,7 +152,7 @@ public class Patient {
         }
 
         //generating a patientID
-        patientID = ThreadLocalRandom.current().nextInt(1000, 9999);
+        patientID = ThreadLocalRandom.current().nextInt(10000, 99999);
 
         Patient patient_object = new Patient(patientID, age, firstName, lastName, gender, medicalCondition, category);
         listOfPatients.add(patient_object);
