@@ -182,5 +182,4 @@ public class Inpatient extends Patient {
                 + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition()
                 + ". They have been placed in ward " + getWardNumber() + ", bed " + getBedNumber() + ".");
     }
-
 }
