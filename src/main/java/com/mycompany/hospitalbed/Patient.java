@@ -104,10 +104,10 @@ public class Patient {
         System.out.print("First Name: ");
         //consuming /n (for some reason it only works when i do it this way around)
         input.nextLine();
-        firstName = input.nextLine();
+        firstName = input.nextLine().trim();
 
         System.out.print("Last name: ");
-        lastName = input.nextLine();
+        lastName = input.nextLine().trim();
 
         age = 0;
         /////////////

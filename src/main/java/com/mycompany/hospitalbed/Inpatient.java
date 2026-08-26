@@ -42,22 +42,50 @@ public class Inpatient extends Patient {
 
         System.out.println("Fill out the following questions about the patient: ");
 
-        System.out.print("First Name: ");
-        input.nextLine();//consuming /n (for some reason it only works when i do it this way around)
-        firstName = input.nextLine();
+        firstName = "";
+        //consuming \n
+        input.nextLine();
+        //loop for error handling
+        boolean flag1 = true;
+        while (flag1) {
+            System.out.print("First Name: ");
+            firstName = input.nextLine().trim();
+            if (firstName.isEmpty()) {
+                System.out.println("Error: You did not enter a first name.");
+            } else {
+                flag1 = false;
+            }
+        }
 
-        System.out.print("Last name: ");
-        lastName = input.nextLine();
+        lastName = "";
+        boolean flag2 = true;
+        while (flag2) {
+            System.out.print("Last name: ");
+            lastName = input.nextLine().trim();
+            if (lastName.isEmpty()) {
+                System.out.println("Error: You did not enter a last name.");
+            } else {
+                flag2 = false;
+            }
+        }
 
         age = 0;
-        /////////////
-        try {
+        boolean flag3 = true;
+        while (flag3) {
             System.out.print("Age: ");
-            age = input.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Enter an integer please");
+            try {
+                age = input.nextInt();
+                if (age <= 0) {
+                    System.out.println("Error: Age must be greater than 0");
+                } else {
+                    flag3 = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Enter an integer please.");
+                //clearing the error
+                input.nextLine();
+            }
         }
-        
         //consuming \n
         input.nextLine();
 
@@ -84,15 +112,15 @@ public class Inpatient extends Patient {
         wardNumber = 3;
 
         Inpatient inpatient_object = new Inpatient(patientID, age, firstName, lastName, gender, medicalCondition, category, wardNumber, 0);
-        
+
         //assigning to the first open bed
         boolean assigned = Beds.assignBeds(inpatient_object);
-        
+
         //whether to add or not
-        if (assigned){
+        if (assigned) {
             listOfInpatients.add(inpatient_object);
         }
-        
+
         //viewing inpatient details
         System.out.println("Do you want to view patient details? y/n");
         String view = input.nextLine().trim();
@@ -101,16 +129,16 @@ public class Inpatient extends Patient {
         } else if (view.equalsIgnoreCase("N")) {
             System.out.println("Ok, not displaying details.\n");
         }
-        
+
         return inpatient_object;
     }
-    
+
     /////////////////////////////////display////////////////////////////////////
     @Override
     public void displayDetails() {
         System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
-                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() +
-                ". They have been placed in ward " + getWardNumber() + ", bed " + getBedNumber() + ".");
+                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition()
+                + ". They have been placed in ward " + getWardNumber() + ", bed " + getBedNumber() + ".");
     }
 
 }
