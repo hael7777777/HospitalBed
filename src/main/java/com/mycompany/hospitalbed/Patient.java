@@ -101,39 +101,97 @@ public class Patient {
 
         System.out.println("Fill out the following questions about the patient: ");
 
-        System.out.print("First Name: ");
-        //consuming /n (for some reason it only works when i do it this way around)
+        //inputs for the inpatient name
+        firstName = "";
+        //consuming \n
         input.nextLine();
-        firstName = input.nextLine().trim();
-
-        System.out.print("Last name: ");
-        lastName = input.nextLine().trim();
-
-        age = 0;
-        /////////////
-        try {
-            System.out.print("Age: ");
-            age = input.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Error: Enter an integer please");
+        //loop for error handling
+        boolean flag1 = true;
+        while (flag1) {
+            System.out.print("First Name: ");
+            //trim removes whitespace
+            firstName = input.nextLine().trim();
+            //checking if input is blank
+            if (firstName.isEmpty()) {
+                System.out.println("Error: You did not enter a first name.");
+            } else {
+                flag1 = false;
+            }
         }
 
-        //consuming /n
+        //inputs for the inpatients last name
+        lastName = "";
+        boolean flag2 = true;
+        while (flag2) {
+            System.out.print("Last name: ");
+            //trim removes whitespace
+            lastName = input.nextLine().trim();
+            //checking if input is blank
+            if (lastName.isEmpty()) {
+                System.out.println("Error: You did not enter a last name.");
+            } else {
+                flag2 = false;
+            }
+        }
+
+        //age input for the inpatient with error handling
+        age = 0;
+        boolean flag3 = true;
+        while (flag3) {
+            System.out.print("Age: ");
+            try {
+                age = input.nextInt();
+                if (age <= 0) {
+                    System.out.println("Error: Age must be greater than 0.");
+                } else {
+                    flag3 = false;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Enter an integer please.");
+                //clearing the error
+                input.nextLine();
+            }
+        }
+        //consuming \n
         input.nextLine();
-        
-        System.out.print("Gender - M/F: ");
-        String answer = input.nextLine().trim();
+
         //initializing gender
         gender = null;
-        if (answer.equalsIgnoreCase("M")) {
-            gender = Gender.Male;
-        } else if (answer.equalsIgnoreCase("F")) {
-            gender = Gender.Female;
+        //gender input for inpatient withh error handling
+        boolean flag4 = true;
+        while (flag4) {
+            //gender input for the inpatient 
+            System.out.print("Gender - M/F: ");
+            String answer = input.nextLine().trim();
+
+            if (answer.equalsIgnoreCase("M")) {
+                gender = Gender.Male;
+                flag4 = false;
+            } else if (answer.equalsIgnoreCase("F")) {
+                gender = Gender.Female;
+                flag4 = false;
+            } else {
+                System.out.println("Error: Input M or F.");
+            }
         }
 
-        System.out.print("Condition: ");
-        medicalCondition = input.nextLine();
+        //initializing the condition
+        medicalCondition = "";
+        //input for the condition of the patient
+        boolean flag5 = true;
+        while (flag5) {
+            System.out.print("Condition: ");
+            //trimming whitespace
+            medicalCondition = input.nextLine().trim();
+            //error handling
+            if (medicalCondition.isEmpty()) {
+                System.out.println("Error: You did not state the condition.");
+            } else {
+                flag5 = false;
+            }
+        }
 
+        //confirming what category thr patient is
         System.out.println("Category confirmation: \n\t1. Outpatient\n\t2. Emergency");
         int y = input.nextInt();
         //consuming \n
@@ -154,16 +212,27 @@ public class Patient {
         //generating a patientID
         patientID = ThreadLocalRandom.current().nextInt(10000, 99999);
 
+        //creating the patient and adding them to the list of the patients
         Patient patient_object = new Patient(patientID, age, firstName, lastName, gender, medicalCondition, category);
         listOfPatients.add(patient_object);
-        
+
         //viewing patient details
-        System.out.println("Do you want to view patient details? y/n");
-        String view = input.nextLine().trim();
-        if (view.equalsIgnoreCase("Y")) {
-            patient_object.displayDetails();
-        } else if (view.equalsIgnoreCase("N")) {
-            System.out.println("Ok, not displaying details.\n");
+        System.out.println("Do you want to view patient's details? y/n");
+        boolean flag6 = true;
+        while (flag6) {
+            //trim to remove the whitespace
+            String view = input.nextLine().trim();
+            if (view.equalsIgnoreCase("Y")) {
+                patient_object.displayDetails();
+                flag6 = false;
+            } else if (view.equalsIgnoreCase("N")) {
+                System.out.println("Ok, not displaying details.\n");
+                flag6 = false;
+            } else if (view.isEmpty()) {
+                System.out.println("Error: You did not give an answer.");
+            } else {
+                System.out.println("Error: You did not give a valid answer (y/n).");
+            }
         }
 
         Register.reprompt(input);
@@ -174,9 +243,9 @@ public class Patient {
     /////////////////////////////////display////////////////////////////////////
     public void displayDetails() {
         System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
-                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + "." );
+                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + ".");
     }
-    
+
 //    public void update(){
 //        
 //    }
