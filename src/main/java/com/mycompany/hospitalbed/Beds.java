@@ -41,4 +41,8 @@ public class Beds {
             System.out.println();
         }
     }
+    
+    public static void search(Scanner input) {
+        
+    }
 }

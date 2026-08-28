@@ -356,19 +356,4 @@ public class Patient {
             }
         }
     }
-
-    ///////////////////////////////search///////////////////////////////////////
-    public void search(Scanner input) {
-        System.out.print("Which patient would you like to search for?");
-        for (int x = 0; x < listOfPatients.size(); x++) {
-            System.out.print((x + 1) + ":" + listOfPatients.get(x));
-            int p;
-            p = input.nextInt();
-        }
-    }
-
-    /////////////////////////////delete_patient/////////////////////////////////
-    public void delete(Scanner input) {
-
-    }
 }

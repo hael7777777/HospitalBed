@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 public class Register {
 
+    /////////////////////////////////////////initial////////////////////////////
     public static void register(Scanner input) {
         System.out.println("Is your patient an inpatient? (enter '1' or '2') \n\t1. Yes\n\t2. No");
         int x = input.nextInt();
@@ -28,6 +29,38 @@ public class Register {
             register(input);
         } else if (answer.equalsIgnoreCase("N")) {
             System.out.println("Ok, not registering another patient.\n");
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+    
+    public static void option(Scanner input) {
+        System.out.println("Do you want to update a patient's details or discharge a patient?");
+        boolean flag = true;
+        while (flag) {
+            System.out.println("\t1. Update\n\t2. Discharge\n\t3. EXIT");
+            int option = input.nextInt();
+            //consuuuuume
+            input.nextLine();
+            switch (option) {
+                case 1:
+                    System.out.println("Updating...");
+                    updatePatient(input);
+                    flag = false;
+                    break;
+                case 2:
+                    System.out.println("Discharging...");
+                    deletePatient(input);
+                    flag = false;
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    reprompt(input);
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("Error: input value 1 or 2.");
+            }
         }
     }
 
@@ -61,6 +94,7 @@ public class Register {
                 }
             }
         }
+        //if no patients exist then it goes to inpatients
         if (updatingPatient != null) {
             updatingPatient.updateDetails(input);
         } else if (updatingInpatient != null) {
@@ -69,4 +103,45 @@ public class Register {
             System.out.println("Patient with ID: " + wantedID + " not found.");
         }
     }
+    
+   public static void deletePatient(Scanner input) {
+       if (Patient.listOfPatients.isEmpty() && Inpatient.listOfInpatients.isEmpty()) {
+            System.out.println("No patients exist!");
+            return;
+        }
+
+        System.out.println("\nEnter patient ID: ");
+        int toDeleteID = input.nextInt();
+        //we did next int so i need to consume \n
+        input.nextLine();
+
+        Patient removablePatient = null;
+        Inpatient removableInpatient = null;
+
+        //looping through objects (referenced)
+        for (Patient x : Patient.listOfPatients) {
+            if (x.getPatientID() == toDeleteID) {
+                removablePatient = x;
+                break;
+            }
+        }
+        //if no patients exist then it goes to inpatients
+        if (removablePatient == null) {
+            for (Inpatient y : Inpatient.listOfInpatients) {
+                if (y.getPatientID() == toDeleteID) {
+                    removableInpatient = y;
+                    break;
+                }
+            }
+        }
+        if (removablePatient != null) {
+            //delete
+            Patient.listOfPatients.remove(removablePatient);
+        } else if (removableInpatient != null) {
+            //delete
+            Inpatient.listOfInpatients.remove(removableInpatient);
+        } else {
+            System.out.println("Patient with ID: " + toDeleteID + " not found.");
+        }
+   }
 }
