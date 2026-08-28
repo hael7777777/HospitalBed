@@ -3,6 +3,7 @@ package com.mycompany.hospitalbed;
 import java.util.Scanner;
 
 public class HospitalBed {
+
     /*
         Please view my public GitHub repo @hael7777777 to see:
         - Commit history (if needed)
@@ -35,15 +36,22 @@ public class HospitalBed {
     // - console based and menu-driven                            //
     ////////////////////////////////////////////////////////////////
     
-    */
+     */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        Register.register(input);
+        boolean running = true;
 
-        System.out.println("\n--- ward 3 ---");
-        Beds.beds(input);
+        while (running) {
+            Register.register(input);
 
-        //goes to updating details or deleting a patient
-        Register.option(input);
+            System.out.println("\n--- ward 3 ---");
+            Beds.beds(input);
+
+            //goes to updating details or deleting a patient
+            running = Register.option(input);
+        }
+        
+        System.out.println("Closing!");
+        input.close();
     }
 }

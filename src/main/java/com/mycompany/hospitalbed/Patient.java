@@ -245,114 +245,120 @@ public class Patient {
         System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
                 + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + ".");
     }
-    
+
     ////////////////////////////////update_details//////////////////////////////
     public void updateDetails(Scanner input) {
         System.out.println("Which details do you want to update?");
         boolean updateFlag = true;
         while (updateFlag) {
             System.out.println("\t1. Age\n\t2. First Name\n\t3. Last Name\n\t4. Gender\n\t5. Medical Condition\n\t6. Display Details\n\t7. EXIT");
-            int num = input.nextInt();
-            input.nextLine();
-            switch (num) {
-                case 1:
-                    int updateAge = 0;
-                    boolean flag7 = true;
-                    while (flag7) {
-                        System.out.print("Enter the new age: ");
-                        try {
-                            updateAge = input.nextInt();
-                            if (updateAge <= 0) {
-                                System.out.println("Error: Age must be greater than 0.");
-                            } else {
-                                flag7 = false;
+            try {
+                int num = input.nextInt();
+                input.nextLine();
+                switch (num) {
+                    case 1:
+                        int updateAge = 0;
+                        boolean flag7 = true;
+                        while (flag7) {
+                            System.out.print("Enter the new age: ");
+                            try {
+                                updateAge = input.nextInt();
+                                if (updateAge <= 0) {
+                                    System.out.println("Error: Age must be greater than 0.");
+                                } else {
+                                    flag7 = false;
+                                }
+                            } catch (InputMismatchException e) {
+                                System.out.println("Error: Enter an integer please.");
+                                //clearing the error
+                                input.nextLine();
                             }
-                        } catch (InputMismatchException e) {
-                            System.out.println("Error: Enter an integer please.");
-                            //clearing the error
-                            input.nextLine();
                         }
-                    }
-                    //consuming \n
-                    input.nextLine();
-                    break;
-                case 2:
-                    String fName;
-                    //loop for error handling
-                    boolean flag8 = true;
-                    while (flag8) {
-                        System.out.print("Enter the new first name:");
-                        //trim removes whitespace
-                        fName = input.nextLine().trim();
-                        //checking if input is blank
-                        if (fName.isEmpty()) {
-                            System.out.println("Error: You did not enter a first name.");
-                        } else {
-                            setFirstName(fName);
-                            flag8 = false;
+                        //consuming \n
+                        input.nextLine();
+                        setAge(updateAge);
+                        break;
+                    case 2:
+                        String fName;
+                        //loop for error handling
+                        boolean flag8 = true;
+                        while (flag8) {
+                            System.out.print("Enter the new first name:");
+                            //trim removes whitespace
+                            fName = input.nextLine().trim();
+                            //checking if input is blank
+                            if (fName.isEmpty()) {
+                                System.out.println("Error: You did not enter a first name.");
+                            } else {
+                                setFirstName(fName);
+                                flag8 = false;
+                            }
                         }
-                    }
-                    break;
-                case 3:
-                    String lName;
-                    boolean flag9 = true;
-                    while (flag9) {
-                        System.out.print("Enter the new last name:");
-                        //trim removes whitespace
-                        lName = input.nextLine().trim();
-                        //checking if input is blank
-                        if (lName.isEmpty()) {
-                            System.out.println("Error: You did not enter a last name.");
-                        } else {
-                            setLastName(lName);
-                            flag9 = false;
+                        break;
+                    case 3:
+                        String lName;
+                        boolean flag9 = true;
+                        while (flag9) {
+                            System.out.print("Enter the new last name:");
+                            //trim removes whitespace
+                            lName = input.nextLine().trim();
+                            //checking if input is blank
+                            if (lName.isEmpty()) {
+                                System.out.println("Error: You did not enter a last name.");
+                            } else {
+                                setLastName(lName);
+                                flag9 = false;
+                            }
                         }
-                    }
-                    break;
-                case 4:
-                    //initializing gender
-                    Gender gender;
-                    //gender input for inpatient withh error handling
-                    boolean flag4 = true;
-                    while (flag4) {
-                        //gender input for the inpatient 
-                        System.out.print("Enter the updated gender - M/F:");
-                        String gen = input.nextLine().trim();
-                        if (gen.equalsIgnoreCase("M")) {
-                            setGender(Gender.Male);
-                            flag4 = false;
-                        } else if (gen.equalsIgnoreCase("F")) {
-                            setGender(Gender.Female);
-                            flag4 = false;
-                        } else {
-                            System.out.println("Error: Input M or F.");
+                        break;
+                    case 4:
+                        //initializing gender
+                        Gender gender;
+                        //gender input for inpatient withh error handling
+                        boolean flag4 = true;
+                        while (flag4) {
+                            //gender input for the inpatient 
+                            System.out.print("Enter the updated gender - M/F:");
+                            String gen = input.nextLine().trim();
+                            if (gen.equalsIgnoreCase("M")) {
+                                setGender(Gender.Male);
+                                flag4 = false;
+                            } else if (gen.equalsIgnoreCase("F")) {
+                                setGender(Gender.Female);
+                                flag4 = false;
+                            } else {
+                                System.out.println("Error: Input M or F.");
+                            }
                         }
-                    }
-                    break;
-                case 5:
-                    boolean flag5 = true;
-                    while (flag5) {
-                        System.out.print("Enter the new medical condition:");
-                        //trimming whitespace
-                        String medicalCondition = input.nextLine().trim();
-                        //error handling
-                        if (medicalCondition.isEmpty()) {
-                            System.out.println("Error: You did not state the condition.");
-                        } else {
-                            setMedicalCondition(medicalCondition);
-                            flag5 = false;
+                        break;
+                    case 5:
+                        boolean flag5 = true;
+                        while (flag5) {
+                            System.out.print("Enter the new medical condition:");
+                            //trimming whitespace
+                            String medicalCondition = input.nextLine().trim();
+                            //error handling
+                            if (medicalCondition.isEmpty()) {
+                                System.out.println("Error: You did not state the condition.");
+                            } else {
+                                setMedicalCondition(medicalCondition);
+                                flag5 = false;
+                            }
                         }
-                    }
-                    break;
-                case 6:
-                    displayDetails();
-                    break;
-                case 7:
-                    System.out.println("Exiting the updating section...");
-                    updateFlag = false;
-                    break;
-                default:
-                    System.out.println("Error: Invalid option.");
+                        break;
+                    case 6:
+                        displayDetails();
+                        break;
+                    case 7:
+                        System.out.println("Exiting the updating section...");
+                        updateFlag = false;
+                        break;
+                    default:
+                        System.out.println("Error: Invalid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Please enter a numerical value.");
+                input.nextLine();
             }
         }
     }
