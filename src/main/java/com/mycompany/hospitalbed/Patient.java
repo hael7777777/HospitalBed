@@ -209,7 +209,7 @@ public class Patient {
                 System.out.println("Error: Enter a number 1 through 3");
         }
 
-        //generating a patientID
+        //generating a patientID (referenced)
         patientID = ThreadLocalRandom.current().nextInt(10000, 99999);
 
         //creating the patient and adding them to the list of the patients
@@ -245,22 +245,21 @@ public class Patient {
         System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
                 + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + ".");
     }
-
-    //patientX.updateDetails(input); 
-    //TODO: fix /n issues if any
+    
     ////////////////////////////////update_details//////////////////////////////
     public void updateDetails(Scanner input) {
         System.out.println("Which details do you want to update?");
         boolean updateFlag = true;
         while (updateFlag) {
-            System.out.println("\t1. Age\n\t2. First Name\n\t3. Last Name\n\t4. Gender\n\t5. Medical Condition\n\t6. EXIT");
+            System.out.println("\t1. Age\n\t2. First Name\n\t3. Last Name\n\t4. Gender\n\t5. Medical Condition\n\t6. Display Details\n\t7. EXIT");
             int num = input.nextInt();
+            input.nextLine();
             switch (num) {
                 case 1:
                     int updateAge = 0;
                     boolean flag7 = true;
                     while (flag7) {
-                        System.out.print("Enter the new Age");
+                        System.out.print("Enter the new age: ");
                         try {
                             updateAge = input.nextInt();
                             if (updateAge <= 0) {
@@ -346,6 +345,9 @@ public class Patient {
                     }
                     break;
                 case 6:
+                    displayDetails();
+                    break;
+                case 7:
                     System.out.println("Exiting the updating section...");
                     updateFlag = false;
                     break;
@@ -357,15 +359,13 @@ public class Patient {
 
     ///////////////////////////////search///////////////////////////////////////
     public void search(Scanner input) {
-            System.out.print("Which patient would you like to search for?");
-            for (int x = 0; x < listOfPatients.size(); x++) {
-                System.out.print((x + 1) + ":" + listOfPatients.get(x));
-                int p;
-                p = input.nextInt();
-            }
-            
+        System.out.print("Which patient would you like to search for?");
+        for (int x = 0; x < listOfPatients.size(); x++) {
+            System.out.print((x + 1) + ":" + listOfPatients.get(x));
+            int p;
+            p = input.nextInt();
+        }
     }
-    
 
     /////////////////////////////delete_patient/////////////////////////////////
     public void delete(Scanner input) {

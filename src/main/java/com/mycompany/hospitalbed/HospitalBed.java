@@ -25,5 +25,8 @@ public class HospitalBed {
         
         System.out.println("\n--- ward 3 ---");
         Beds.beds(input);
+        
+        Register.updatePatient(input);
+        }
     }
-}
+
