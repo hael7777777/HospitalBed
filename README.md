@@ -23,6 +23,5 @@ This problem requires a more **sophisticated** system therefore a digital approa
 
 ## References
 ### Code
-- 🧩 *[Regex](https://www.w3schools.com/java/java_regex.asp)*
 - 🧵 *[ThreadLocalRandom](https://www.quora.com/How-do-you-generate-a-random-10-digit-number-in-Java)*
 - ➰ *[Looping Through Objects](https://stackoverflow.com/questions/7763131/java-for-loop-syntax-for-t-obj-objects)*
