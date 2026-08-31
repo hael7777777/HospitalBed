@@ -30,14 +30,20 @@ public class Register {
         }
     }
 
-    public static void reprompt(Scanner input) {
+    public static boolean reprompt(Scanner input) {
         System.out.println("Do you want to register another patient? y/n");
         String answer = input.nextLine().trim();
 
-        if (answer.equalsIgnoreCase("Y")) {
-            register(input);
-        } else if (answer.equalsIgnoreCase("N")) {
-            System.out.println("Ok, not registering another patient.\n");
+        while (true) {
+            if (answer.equalsIgnoreCase("Y")) {
+                register(input);
+                return false;
+            } else if (answer.equalsIgnoreCase("N")) {
+                System.out.println("Ok, not registering another patient.\n");
+                return false;
+            } else {
+                System.out.println("Error: Enter y/n please.");
+            }
         }
     }
 
@@ -170,6 +176,7 @@ public class Register {
             Patient.listOfPatients.remove(removablePatient);
         } else if (removableInpatient != null) {
             //delete
+            Beds.emptyBed(removableInpatient.getBedNumber());
             Inpatient.listOfInpatients.remove(removableInpatient);
         } else {
             System.out.println("Patient with ID: " + toDeleteID + " not found.");

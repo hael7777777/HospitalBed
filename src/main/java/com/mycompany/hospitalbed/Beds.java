@@ -42,7 +42,18 @@ public class Beds {
         }
     }
     
-    public static void search(Scanner input) {
-        
+    
+    public static boolean emptyBed(int bedNumber) {
+        for (int x = 0; x < bed.length; x++) {
+            for (int y = 0; y < bed[x].length; y++) {
+                //applying the same indexing logic as when assigning the bed to an impatient
+                int currentBed = (x * bed[0].length) + y + 1;
+                if (currentBed == bedNumber && bed[x][y] != null) {
+                    bed[x][y] = null;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

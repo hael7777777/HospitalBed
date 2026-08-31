@@ -361,5 +361,6 @@ public class Patient {
                 input.nextLine();
             }
         }
+        input.nextLine();
     }
 }

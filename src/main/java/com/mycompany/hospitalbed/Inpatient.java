@@ -291,6 +291,7 @@ public class Inpatient extends Patient {
                 input.nextLine();
             }
         }
+        input.nextLine();
     }
 
     /////////////////////////////////display////////////////////////////////////
