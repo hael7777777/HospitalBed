@@ -21,6 +21,8 @@ This problem requires a more **sophisticated** system therefore a digital approa
 
 ## Code Structure
 
+![UML Diagram](/src/Images/UML.png)
+
 ## References
 ### Code
 - 🧵 *[ThreadLocalRandom](https://www.quora.com/How-do-you-generate-a-random-10-digit-number-in-Java)*
