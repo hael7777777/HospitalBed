@@ -28,7 +28,7 @@ public class Beds {
     }
 
     //printing out the array
-    public static void displayBeds(Inpatient bed[][]) {
+    public static void displayBeds(Inpatient bed[][]) {   
         for (int x = 0; x < bed.length; x++) {
             for (int y = 0; y < bed[x].length; y++) {
                 if (bed[x][y] != null) {
