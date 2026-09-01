@@ -1,18 +1,23 @@
 package com.mycompany.hospitalbed;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Report {
 
+    static ArrayList<Integer> IDs = new ArrayList<>();
+
     public static boolean prompt(Scanner input) {
         System.out.print("Would you like to view reports? y/n");
-        String answer = input.nextLine().trim();
+        String answer1 = input.nextLine().trim();
 
         while (true) {
-            if (answer.equalsIgnoreCase("Y")) {
+            if (answer1.equalsIgnoreCase("Y")) {
                 reportChoice(input);
                 return false;
-            } else if (answer.equalsIgnoreCase("N")) {
+            } else if (answer1.equalsIgnoreCase("N")) {
                 System.out.println("Ok, not viewing reports.\n");
                 return false;
             } else {
@@ -21,11 +26,11 @@ public class Report {
         }
     }
 
-    public static void displayRegisteredPatients() {
-        System.out.println("Displaying all patients and their information: ");
-        
+    public static void displayRegisteredPatients(Scanner input) {
+
         System.out.println("There are " + (Inpatient.listOfInpatients.size() + Patient.listOfPatients.size()) + " registered patients");
-        
+        System.out.println("Displaying all patients and their information: ");
+
         for (int x = 0; x < Patient.listOfPatients.size(); x++) {
             System.out.println("////////////////////////////////////////////////////"
                     + "\nPatient " + (x + 1) + " (" + Patient.listOfPatients.get(x).PatientID + ") :"
@@ -35,6 +40,7 @@ public class Report {
                     + "\n\tGender: " + Patient.listOfPatients.get(x).theGender
                     + "\n\tCondition: " + Patient.listOfPatients.get(x).MedicalCondition
                     + "\n////////////////////////////////////////////////////\n");
+            IDs.add(Patient.listOfPatients.get(x).PatientID);
         }
         for (int y = 0; y < Inpatient.listOfInpatients.size(); y++) {
             System.out.println("////////////////////////////////////////////////////"
@@ -46,13 +52,51 @@ public class Report {
                     + "\n\tCondition: " + Inpatient.listOfInpatients.get(y).MedicalCondition
                     + "\nBed: " + Inpatient.listOfInpatients.get(y).getBedNumber()
                     + "\n////////////////////////////////////////////////////\n");
+            IDs.add(Inpatient.listOfInpatients.get(y).PatientID);
+        }
+        System.out.println("Would you like the patient IDs displayed in ascending order?");
+        System.out.print("Would you like to view reports? y/n");
+        String answer2 = input.nextLine().trim();
+
+        boolean sentinalValue = true;
+        while (sentinalValue) {
+            if (answer2.equalsIgnoreCase("Y")) {
+
+                //variable for loop
+                int i;
+
+                //for my encompassing loop
+                boolean flag = true;
+
+                //temp holder for position while moving to avoid over-writing
+                int temp;
+
+                while (flag) {
+                    flag = false;
+                    //loop so that each index is sorted till resolution is found
+                    for (i = 0; i < IDs.size() - 1; i++) {
+                        if (IDs.get(i) > IDs.get(i + 1)) {
+                            temp = IDs.get(i);
+                            IDs.set(i, IDs.get(i + 1));
+                            IDs.set(i + 1, temp);
+                            flag = true;
+                        }
+                    }
+                }
+                sentinalValue = false;
+            } else if (answer2.equalsIgnoreCase("N")) {
+                System.out.println("Ok, not viewing sorted IDs.\n");
+                sentinalValue = false;
+            } else {
+                System.out.println("Error: Enter y/n please.");
+            }
         }
     }
 
     public static void displayAvailableBeds(Inpatient[][] bed) {
         System.out.println("Here is a diagram of both the occupied and free beds: \n");
         Beds.displayBeds(bed);
-        
+
         System.out.println("Occupied Bed/s: " + (20 - Inpatient.listOfInpatients.size()));
         System.out.println("Ward Capacity: " + (Inpatient.listOfInpatients.size() / 20) * 100);
     }
@@ -61,22 +105,26 @@ public class Report {
         System.out.println("Which report would you like to see?\n\t1. Bed Information\n\t2. Patient Information\n\t3. EXIT");
 
         while (true) {
-            int oneOrTwo = input.nextInt();
-            input.nextLine(); //munch
+            try {
+                int oneOrTwo = input.nextInt();
+                input.nextLine(); //munch
 
-            switch (oneOrTwo) {
-                case 1:
-                    displayRegisteredPatients();
-                    break;
-                case 2:
-                    displayAvailableBeds(Beds.bed);
-                    break;
-                case 3:
-                    System.out.println("Exiting...");
-                    return false;
-                default:
-                    System.out.println("Error: Please enter an integer of 1 to 3");
-                    break;
+                switch (oneOrTwo) {
+                    case 1:
+                        displayRegisteredPatients(input);
+                        break;
+                    case 2:
+                        displayAvailableBeds(Beds.bed);
+                        break;
+                    case 3:
+                        System.out.println("Exiting...");
+                        return false;
+                    default:
+                        System.out.println("Error: Please enter an integer of 1 to 3");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: you did not enter an integer value");
             }
         }
     }

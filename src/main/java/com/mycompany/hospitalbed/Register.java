@@ -53,10 +53,10 @@ public class Register {
         System.out.println("Do you want to update a patient's details or discharge a patient?");
         while (true) {
             System.out.println("\t1. Update\n\t2. Discharge\n\t3. Exit");
-            int option = input.nextInt();
-            //consuuuuume
-            input.nextLine();
             try {
+                int option = input.nextInt();
+                //consuuuuume
+                input.nextLine();
                 switch (option) {
                     case 1:
                         System.out.println("Updating...");
