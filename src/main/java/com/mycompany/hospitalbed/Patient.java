@@ -230,6 +230,7 @@ public class Patient {
             //trim to remove the whitespace
             String view = input.nextLine().trim();
             if (view.equalsIgnoreCase("Y")) {
+                //proceeding to view their details
                 patient_object.displayDetails();
                 flag7 = false;
             } else if (view.equalsIgnoreCase("N")) {
@@ -241,18 +242,14 @@ public class Patient {
                 System.out.println("Error: You did not give a valid answer (y/n).");
             }
         }
+        //asking if they want to do another patient
         Register.reprompt(input);
 
         return patient_object;
     }
 
-    /////////////////////////////////display////////////////////////////////////
-    public void displayDetails() {
-        System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
-                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + ".");
-    }
-
     ////////////////////////////////update_details//////////////////////////////
+    
     public void updateDetails(Scanner input) {
         System.out.println("Which details do you want to update?");
         boolean updateFlag = true;
@@ -260,6 +257,7 @@ public class Patient {
             System.out.println("\t1. Age\n\t2. First Name\n\t3. Last Name\n\t4. Gender\n\t5. Medical Condition\n\t6. Display Details\n\t7. EXIT");
             try {
                 int num = input.nextInt();
+                //consuming \n
                 input.nextLine();
                 switch (num) {
                     case 1:
@@ -282,6 +280,7 @@ public class Patient {
                         }
                         //consuming \n
                         input.nextLine();
+                        //calling setter to change age
                         setAge(updateAge);
                         break;
                     case 2:
@@ -296,6 +295,7 @@ public class Patient {
                             if (fName.isEmpty()) {
                                 System.out.println("Error: You did not enter a first name.");
                             } else {
+                                //calling setter to change first name
                                 setFirstName(fName);
                                 flag9 = false;
                             }
@@ -312,6 +312,7 @@ public class Patient {
                             if (lName.isEmpty()) {
                                 System.out.println("Error: You did not enter a last name.");
                             } else {
+                                //calling setter to change last name
                                 setLastName(lName);
                                 flag10 = false;
                             }
@@ -327,9 +328,11 @@ public class Patient {
                             System.out.print("Enter the updated gender - M/F:");
                             String gen = input.nextLine().trim();
                             if (gen.equalsIgnoreCase("M")) {
+                                //calling setter to change gender
                                 setGender(Gender.Male);
                                 flag11 = false;
                             } else if (gen.equalsIgnoreCase("F")) {
+                                //calling setter to change gender
                                 setGender(Gender.Female);
                                 flag11 = false;
                             } else {
@@ -347,15 +350,18 @@ public class Patient {
                             if (medicalCondition.isEmpty()) {
                                 System.out.println("Error: You did not state the condition.");
                             } else {
+                                //calling setter to change condition
                                 setMedicalCondition(medicalCondition);
                                 flag12 = false;
                             }
                         }
                         break;
                     case 6:
+                        //proceeding to displaying the details
                         displayDetails();
                         break;
                     case 7:
+                        //exit
                         System.out.println("Exiting the updating section...");
                         updateFlag = false;
                         break;
@@ -364,9 +370,19 @@ public class Patient {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error: Please enter a numerical value.");
+                //consuming misinput
                 input.nextLine();
             }
         }
+        //clearing \n
         input.nextLine();
+    }
+    
+    /////////////////////////////////display////////////////////////////////////
+    
+    public void displayDetails() {
+        //prints out all of the patients info in a readable format
+        System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
+                + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition() + ".");
     }
 }

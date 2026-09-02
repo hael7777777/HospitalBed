@@ -159,6 +159,7 @@ public class Inpatient extends Patient {
             //trim to remove the whitespace
             String view = input.nextLine().trim();
             if (view.equalsIgnoreCase("Y")) {
+                //proceeding to view inpatients details
                 inpatient_object.displayDetails();
                 flag6 = false;
             } else if (view.equalsIgnoreCase("N")) {
@@ -171,12 +172,14 @@ public class Inpatient extends Patient {
                 input.nextLine();
             }
         }
+        //asking if they want to do another patient
         Register.reprompt(input);
-        
+
         return inpatient_object;
     }
 
     //////////////////////////////////update////////////////////////////////////
+    
     @Override
     public void updateDetails(Scanner input) {
         System.out.println("Which details do you want to update?");
@@ -185,6 +188,7 @@ public class Inpatient extends Patient {
             System.out.println("\t1. Age\n\t2. First Name\n\t3. Last Name\n\t4. Gender\n\t5. Medical Condition\n\t6. Display Details\n\t7. EXIT");
             try {
                 int num = input.nextInt();
+                //consuming \n
                 input.nextLine();
                 switch (num) {
                     case 1:
@@ -207,6 +211,7 @@ public class Inpatient extends Patient {
                         }
                         //consuming \n
                         input.nextLine();
+                        //calling setter to change age
                         setAge(updateAge);
                         break;
                     case 2:
@@ -221,6 +226,7 @@ public class Inpatient extends Patient {
                             if (fName.isEmpty()) {
                                 System.out.println("Error: You did not enter a first name.");
                             } else {
+                                //calling setter to change first name
                                 setFirstName(fName);
                                 flag8 = false;
                             }
@@ -237,6 +243,7 @@ public class Inpatient extends Patient {
                             if (lName.isEmpty()) {
                                 System.out.println("Error: You did not enter a last name.");
                             } else {
+                                //calling setter to change last name
                                 setLastName(lName);
                                 flag9 = false;
                             }
@@ -250,11 +257,14 @@ public class Inpatient extends Patient {
                         while (flag4) {
                             //gender input for the inpatient 
                             System.out.print("Enter the updated gender - M/F:");
+                            //trim to get rid of whitespace
                             String gen = input.nextLine().trim();
                             if (gen.equalsIgnoreCase("M")) {
+                                //calling setter to change gender
                                 setGender(Gender.Male);
                                 flag4 = false;
                             } else if (gen.equalsIgnoreCase("F")) {
+                                //calling setter to change gender
                                 setGender(Gender.Female);
                                 flag4 = false;
                             } else {
@@ -272,15 +282,18 @@ public class Inpatient extends Patient {
                             if (medicalCondition.isEmpty()) {
                                 System.out.println("Error: You did not state the condition.");
                             } else {
+                                //calling setter to change condition
                                 setMedicalCondition(medicalCondition);
                                 flag5 = false;
                             }
                         }
                         break;
                     case 6:
+                        //proceeding to displaying the details
                         displayDetails();
                         break;
                     case 7:
+                        //exit
                         System.out.println("Exiting the updating section...");
                         updateFlag = false;
                         break;
@@ -289,15 +302,19 @@ public class Inpatient extends Patient {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error: Please enter a numerical value.");
+                //consuming misinput
                 input.nextLine();
             }
         }
+        //clearing \n
         input.nextLine();
     }
 
     /////////////////////////////////display////////////////////////////////////
+
     @Override
     public void displayDetails() {
+        //prints out all of the inpatients info in a readable format
         System.out.println("Patient ID: " + getPatientID() + "(" + getCategory() + ")\n////////////////////////////////\n" + getFirstName() + ", "
                 + getLastName() + "(" + getGender() + ")" + " is " + getAge() + " years of age and has " + getMedicalCondition()
                 + ". They have been placed in ward " + getWardNumber() + ", bed " + getBedNumber() + ".");

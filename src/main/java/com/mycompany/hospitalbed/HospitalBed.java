@@ -8,7 +8,7 @@ public class HospitalBed {
         Please view my public GitHub repo @hael7777777 to see:
         - Commit history (if needed)
         - README
-        - UML diagrams 
+        - UML and general logic-flow diagrams
     
     ////////////////////////////////////////////////////////////////
     // The purpose of this project is to shift the administrative //
