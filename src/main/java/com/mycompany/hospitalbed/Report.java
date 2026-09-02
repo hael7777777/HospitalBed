@@ -54,7 +54,7 @@ public class Report {
                     + "\n////////////////////////////////////////////////////\n");
             IDs.add(Inpatient.listOfInpatients.get(y).PatientID);
         }
-        System.out.println("Would you like the patient IDs displayed in ascending order?");
+        System.out.println("Would you like the patient IDs displayed in ascending order? y/n");
         boolean sentinalValue = true;
         while (sentinalValue) {
             String answer2 = input.nextLine().trim();
@@ -81,6 +81,10 @@ public class Report {
                         }
                     }
                 }
+                //printing out the ids
+                for (int j =0; j < IDs.size(); j++) {
+                    System.out.println(IDs.get(j));
+                }
                 sentinalValue = false;
             } else if (answer2.equalsIgnoreCase("N")) {
                 System.out.println("Ok, not viewing sorted IDs.\n");
@@ -100,9 +104,8 @@ public class Report {
     }
 
     public static boolean reportChoice(Scanner input) {
-        System.out.println("Which report would you like to see?\n\t1. Bed Information\n\t2. Patient Information\n\t3. EXIT");
-
         while (true) {
+            System.out.println("Which report would you like to see?\n\t1. Bed Information\n\t2. Patient Information\n\t3. EXIT");
             try {
                 int oneOrTwo = input.nextInt();
                 input.nextLine(); //munch
