@@ -1,7 +1,6 @@
 package com.mycompany.hospitalbed;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
@@ -10,10 +9,9 @@ public class Report {
     static ArrayList<Integer> IDs = new ArrayList<>();
 
     public static boolean prompt(Scanner input) {
-        System.out.print("Would you like to view reports? y/n");
-        String answer1 = input.nextLine().trim();
-
         while (true) {
+            System.out.println("Would you like to view reports? y/n");
+            String answer1 = input.nextLine().trim();
             if (answer1.equalsIgnoreCase("Y")) {
                 reportChoice(input);
                 return false;
@@ -27,6 +25,8 @@ public class Report {
     }
 
     public static void displayRegisteredPatients(Scanner input) {
+        //IDs get would get duplicated if i called this more than once so i have to make it a clean slate each time
+        IDs.clear();
 
         System.out.println("There are " + (Inpatient.listOfInpatients.size() + Patient.listOfPatients.size()) + " registered patients");
         System.out.println("Displaying all patients and their information: ");
@@ -44,7 +44,7 @@ public class Report {
         }
         for (int y = 0; y < Inpatient.listOfInpatients.size(); y++) {
             System.out.println("////////////////////////////////////////////////////"
-                    + "\nPatient " + (y + 1) + " (" + Inpatient.listOfPatients.get(y).PatientID + ") :"
+                    + "\nPatient " + (y + 1) + " (" + Inpatient.listOfInpatients.get(y).PatientID + ") :"
                     + "\n\tCatagory: " + Inpatient.listOfInpatients.get(y).Category
                     + "\n\tName: " + Inpatient.listOfInpatients.get(y).FirstName + "," + Inpatient.listOfInpatients.get(y).LastName
                     + "\n\tAge: " + Inpatient.listOfInpatients.get(y).Age
@@ -55,11 +55,9 @@ public class Report {
             IDs.add(Inpatient.listOfInpatients.get(y).PatientID);
         }
         System.out.println("Would you like the patient IDs displayed in ascending order?");
-        System.out.print("Would you like to view reports? y/n");
-        String answer2 = input.nextLine().trim();
-
         boolean sentinalValue = true;
         while (sentinalValue) {
+            String answer2 = input.nextLine().trim();
             if (answer2.equalsIgnoreCase("Y")) {
 
                 //variable for loop
@@ -97,8 +95,8 @@ public class Report {
         System.out.println("Here is a diagram of both the occupied and free beds: \n");
         Beds.displayBeds(bed);
 
-        System.out.println("Occupied Bed/s: " + (20 - Inpatient.listOfInpatients.size()));
-        System.out.println("Ward Capacity: " + (Inpatient.listOfInpatients.size() / 20) * 100);
+        System.out.println("Occupied Bed/s: " + (Inpatient.listOfInpatients.size()));
+        System.out.println("Ward Capacity: " + (Inpatient.listOfInpatients.size() * 100) / 20 + "%");
     }
 
     public static boolean reportChoice(Scanner input) {
@@ -111,10 +109,10 @@ public class Report {
 
                 switch (oneOrTwo) {
                     case 1:
-                        displayRegisteredPatients(input);
+                        displayAvailableBeds(Beds.bed);
                         break;
                     case 2:
-                        displayAvailableBeds(Beds.bed);
+                        displayRegisteredPatients(input);
                         break;
                     case 3:
                         System.out.println("Exiting...");
@@ -125,6 +123,7 @@ public class Report {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Error: you did not enter an integer value");
+                input.nextLine();
             }
         }
     }

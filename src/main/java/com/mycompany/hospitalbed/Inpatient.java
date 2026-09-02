@@ -45,8 +45,6 @@ public class Inpatient extends Patient {
 
         //inputs for the inpatient name
         firstName = "";
-        //consuming \n
-        input.nextLine();
         //loop for error handling
         boolean flag1 = true;
         while (flag1) {
@@ -170,8 +168,11 @@ public class Inpatient extends Patient {
                 System.out.println("Error: You did not give an answer.");
             } else {
                 System.out.println("Error: You did not give a valid answer (y/n).");
+                input.nextLine();
             }
         }
+        Register.reprompt(input);
+        
         return inpatient_object;
     }
 

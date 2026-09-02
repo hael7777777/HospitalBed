@@ -6,34 +6,35 @@ import java.util.Scanner;
 public class Register {
 
     /////////////////////////////////////////initial////////////////////////////
-    public static void register(Scanner input) {
+    public static boolean register(Scanner input) {
         System.out.println("Is your patient an inpatient? (enter '1' or '2') \n\t1. Yes\n\t2. No");
         try {
             while (true) {
-
                 int x = input.nextInt();
+                //consuming \n
+                input.nextLine();
                 switch (x) {
                     case 1:
                         Inpatient.details(input);
-                        break;
+                        return false;
                     case 2:
                         Patient.details(input);
-                        break;
-                    default:
-                        System.out.println("Error: Enter 1 or 2.");
-                        return;
+                        return false;
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Error: Enter 1 orr 2");
+            System.out.println("Error: Enter 1 or 2bbbbbbbbbbbbbbbbbbbbb reg.");
+            //consuming failed input
             input.nextLine();
+            //recursion to reattempt
+            return register(input);
         }
     }
 
+    //////////////////////////////////repromting////////////////////////////////
     public static boolean reprompt(Scanner input) {
         System.out.println("Do you want to register another patient? y/n");
         String answer = input.nextLine().trim();
-
         while (true) {
             if (answer.equalsIgnoreCase("Y")) {
                 register(input);
@@ -42,13 +43,13 @@ public class Register {
                 System.out.println("Ok, not registering another patient.\n");
                 return false;
             } else {
-                System.out.println("Error: Enter y/n please.");
+                System.out.println("Error: Enter y/n please22.");
+                return reprompt(input);
             }
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-    
+    ///////////////////////////////////////option///////////////////////////////  
     public static boolean option(Scanner input) {
         System.out.println("Do you want to update a patient's details or discharge a patient?");
         while (true) {
@@ -69,12 +70,12 @@ public class Register {
                     case 3:
                         System.out.println("If you wish to exit, input 'Y'");
                         String answer = input.nextLine().trim();
-                        return answer.equalsIgnoreCase("Y");
+                        return !answer.equalsIgnoreCase("Y");
                     default:
-                        System.out.println("Error: Input value 1 or 2.");
+                        System.out.println("Error: Input value 1, 2 or 3.");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Error: Input value 1 or 2.");
+                System.out.println("Error: Input value 1 or 2ddddddddddddddddddddddddddddd option.");
                 //catching \n
                 input.nextLine();
             }
@@ -94,14 +95,13 @@ public class Register {
             System.out.println("\nEnter patient ID: ");
             try {
                 wantedID = input.nextInt();
+                input.nextLine();
                 validID = false;
             } catch (InputMismatchException e) {
                 System.out.println("Error: Please enter a numerical value.");
                 input.nextLine();
             }
         }
-        //we did next int so i need to consume \n
-        input.nextLine();
 
         Patient updatingPatient = null;
         Inpatient updatingInpatient = null;

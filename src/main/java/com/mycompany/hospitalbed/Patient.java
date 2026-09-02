@@ -103,8 +103,6 @@ public class Patient {
 
         //inputs for the inpatient name
         firstName = "";
-        //consuming \n
-        input.nextLine();
         //loop for error handling
         boolean flag1 = true;
         while (flag1) {
@@ -192,23 +190,32 @@ public class Patient {
         }
 
         //confirming what category thr patient is
-        System.out.println("Category confirmation: \n\t1. Outpatient\n\t2. Emergency");
-        int y = input.nextInt();
-        //consuming \n
-        input.nextLine();
-        //initialized
         category = null;
-        switch (y) {
-            case 1:
-                category = PatientCategory.Outpatient;
-                break;
-            case 2:
-                category = PatientCategory.Emergency;
-                break;
-            default:
-                System.out.println("Error: Enter a number 1 through 3");
+        boolean flag6 = true;
+        while (flag6) {
+            System.out.println("Category confirmation: \n\t1. Outpatient\n\t2. Emergency");
+            try {
+                int y = input.nextInt();
+                //consuming \n
+                input.nextLine();
+                switch (y) {
+                    case 1:
+                        category = PatientCategory.Outpatient;
+                        flag6 = false;
+                        break;
+                    case 2:
+                        category = PatientCategory.Emergency;
+                        flag6 = false;
+                        break;
+                    default:
+                        System.out.println("Error: Enter a number 1 through 3");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Error: Enter a numerical value.");
+                input.nextLine();
+            }
         }
-
+        
         //generating a patientID (referenced)
         patientID = ThreadLocalRandom.current().nextInt(10000, 99999);
 
@@ -218,23 +225,22 @@ public class Patient {
 
         //viewing patient details
         System.out.println("Do you want to view patient's details? y/n");
-        boolean flag6 = true;
-        while (flag6) {
+        boolean flag7 = true;
+        while (flag7) {
             //trim to remove the whitespace
             String view = input.nextLine().trim();
             if (view.equalsIgnoreCase("Y")) {
                 patient_object.displayDetails();
-                flag6 = false;
+                flag7 = false;
             } else if (view.equalsIgnoreCase("N")) {
                 System.out.println("Ok, not displaying details.\n");
-                flag6 = false;
+                flag7 = false;
             } else if (view.isEmpty()) {
                 System.out.println("Error: You did not give an answer.");
             } else {
                 System.out.println("Error: You did not give a valid answer (y/n).");
             }
         }
-
         Register.reprompt(input);
 
         return patient_object;
@@ -258,15 +264,15 @@ public class Patient {
                 switch (num) {
                     case 1:
                         int updateAge = 0;
-                        boolean flag7 = true;
-                        while (flag7) {
+                        boolean flag8 = true;
+                        while (flag8) {
                             System.out.print("Enter the new age: ");
                             try {
                                 updateAge = input.nextInt();
                                 if (updateAge <= 0) {
                                     System.out.println("Error: Age must be greater than 0.");
                                 } else {
-                                    flag7 = false;
+                                    flag8 = false;
                                 }
                             } catch (InputMismatchException e) {
                                 System.out.println("Error: Enter an integer please.");
@@ -281,8 +287,8 @@ public class Patient {
                     case 2:
                         String fName;
                         //loop for error handling
-                        boolean flag8 = true;
-                        while (flag8) {
+                        boolean flag9 = true;
+                        while (flag9) {
                             System.out.print("Enter the new first name:");
                             //trim removes whitespace
                             fName = input.nextLine().trim();
@@ -291,14 +297,14 @@ public class Patient {
                                 System.out.println("Error: You did not enter a first name.");
                             } else {
                                 setFirstName(fName);
-                                flag8 = false;
+                                flag9 = false;
                             }
                         }
                         break;
                     case 3:
                         String lName;
-                        boolean flag9 = true;
-                        while (flag9) {
+                        boolean flag10 = true;
+                        while (flag10) {
                             System.out.print("Enter the new last name:");
                             //trim removes whitespace
                             lName = input.nextLine().trim();
@@ -307,7 +313,7 @@ public class Patient {
                                 System.out.println("Error: You did not enter a last name.");
                             } else {
                                 setLastName(lName);
-                                flag9 = false;
+                                flag10 = false;
                             }
                         }
                         break;
@@ -315,25 +321,25 @@ public class Patient {
                         //initializing gender
                         Gender gender;
                         //gender input for inpatient withh error handling
-                        boolean flag4 = true;
-                        while (flag4) {
+                        boolean flag11 = true;
+                        while (flag11) {
                             //gender input for the inpatient 
                             System.out.print("Enter the updated gender - M/F:");
                             String gen = input.nextLine().trim();
                             if (gen.equalsIgnoreCase("M")) {
                                 setGender(Gender.Male);
-                                flag4 = false;
+                                flag11 = false;
                             } else if (gen.equalsIgnoreCase("F")) {
                                 setGender(Gender.Female);
-                                flag4 = false;
+                                flag11 = false;
                             } else {
                                 System.out.println("Error: Input M or F.");
                             }
                         }
                         break;
                     case 5:
-                        boolean flag5 = true;
-                        while (flag5) {
+                        boolean flag12 = true;
+                        while (flag12) {
                             System.out.print("Enter the new medical condition:");
                             //trimming whitespace
                             String medicalCondition = input.nextLine().trim();
@@ -342,7 +348,7 @@ public class Patient {
                                 System.out.println("Error: You did not state the condition.");
                             } else {
                                 setMedicalCondition(medicalCondition);
-                                flag5 = false;
+                                flag12 = false;
                             }
                         }
                         break;
