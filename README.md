@@ -33,6 +33,15 @@ This problem requires a more **sophisticated** system therefore a digital approa
 ![UML Diagram](/src/Images/UML.png)
 
 *Diagram was made by hand on Obsidian using Excalidraw.*
+
+### Flow of Logic
+![Logic](/src/Images/LogicFlow.png)
+
+*Diagram was made by hand on Obsidian using Exaclidraw.*
+
+## What I Learnt 
+Throughout this assignment I became to understand various concepts, such as the **OOP** principle **inheritance** and creating methods which do not always use *void*, but instead return objects such as the *Patient* and *Inpatient* and, *boolean* for instances where a loop is the primary function of the method, or realizing that *getters* use *String* when suitable to return string values.
+
 ## References
 - 🧵 *[ThreadLocalRandom](https://www.quora.com/How-do-you-generate-a-random-10-digit-number-in-Java)*
 - ➰ *[Looping Through Objects](https://stackoverflow.com/questions/7763131/java-for-loop-syntax-for-t-obj-objects)*
