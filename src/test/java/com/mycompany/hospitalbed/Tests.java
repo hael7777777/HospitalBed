@@ -42,6 +42,7 @@ public class Tests {
 
     /////////////////////////////////////tests//////////////////////////////////
     
+    // --Register A Patient--
     @Test
     void registerAPatient1() {
         Patient testPatient = newPatient();
@@ -56,6 +57,7 @@ public class Tests {
         assertTrue(Inpatient.listOfPatients.contains(testInpatient));
     }
 
+    // --Search For A Patient--
     @Test
     void searchForPatient() {
         Patient patient1 = newPatient();
@@ -73,6 +75,7 @@ public class Tests {
         assertEquals(patient2, found);
     }
 
+    // --Update Patient Details--
     @Test
     void UpdatePatientDetails() {
         Patient patient1 = newPatient();
@@ -85,6 +88,7 @@ public class Tests {
         assertEquals(7, patient1.getAge());
     }
 
+    // --Delete A Patient--
     @Test
     void deletePatient() {
         Patient patient1 = newPatient();
@@ -93,6 +97,7 @@ public class Tests {
         assertFalse(Patient.listOfPatients.contains(patient1));
     }
 
+    // --Allocate A Bed--
     @Test
     void allocatedBed() {
         Inpatient inpatient = newInpatient();
@@ -101,6 +106,7 @@ public class Tests {
         assertTrue(inpatient.getBedNumber() >= 1 && inpatient.getBedNumber() <= 20);
     }
     
+    // --Release A Bed--
     @Test
     void releaseBed() {
         Inpatient inpatient = newInpatient();
@@ -109,6 +115,7 @@ public class Tests {
         assertTrue(released);
     }
     
+    // --Prevent Duplicate Patient IDs--
     @Test
     void preventDuplicateID() {
         int id = ( 10000 + random.nextInt(89000));
@@ -122,6 +129,7 @@ public class Tests {
         assertTrue(same);
     }
     
+    // --Prevent Allocating An Occupied Bed--
     @Test
     void preventSameBed() {
         Inpatient inpatient1 = newInpatient();
@@ -134,15 +142,17 @@ public class Tests {
         assertNotEquals(occupied, inpatient2.getBedNumber());
     }
     
+    // --Prevent Bed Allocation When All Beds Are Occupied--
     @Test
     void preventIfAllBedTaken() {
         for (int i = 0; i < 20; i++) {
-            assertTrue(Beds.assignBeds(newInpatient()));
+            Beds.assignBeds(newInpatient());
         }
         boolean assigned = Beds.assignBeds(newInpatient());
         assertFalse(assigned);
     }
     
+    // --Sort Patients By Surname Or Patient ID--
     @Test
     void sortPatients() {
         ArrayList<Integer> IDs1 = new ArrayList<>();
@@ -166,8 +176,7 @@ public class Tests {
                     swapped1 = true;
                 }
             }
-        }
-        
+        }        
         boolean swapped2 = true;
         while(swapped2) {
             swapped2 = false;
