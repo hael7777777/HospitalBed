@@ -19,6 +19,14 @@ Medicare is using an archaic method of data storage and retrieval, so we have th
 
 This problem requires a more **sophisticated** system therefore a digital approach is required.
 
+### Assumptions
+- 1 Ward (3)
+- 20 beds in ward
+- one bed at a time for a patient
+- one patient per bed at a time
+- outpatients and emergency don't require beds
+- all information is stored in memory during runtime
+- console based and menu-driven
 ---
 
 ## Code Structure
@@ -26,7 +34,7 @@ This problem requires a more **sophisticated** system therefore a digital approa
 
 *Diagram was made by hand on Obsidian using Excalidraw.*
 ## References
-### Code
 - 🧵 *[ThreadLocalRandom](https://www.quora.com/How-do-you-generate-a-random-10-digit-number-in-Java)*
 - ➰ *[Looping Through Objects](https://stackoverflow.com/questions/7763131/java-for-loop-syntax-for-t-obj-objects)*
 - 🫧 *[BubbleSort Of An ArrayList](https://stackoverflow.com/questions/23310471/bubble-sorting-an-arraylist)*
+- 🎲 *[Random Index Of An Array](https://stackoverflow.com/questions/8065532/how-to-randomly-pick-an-element-from-an-array)*
